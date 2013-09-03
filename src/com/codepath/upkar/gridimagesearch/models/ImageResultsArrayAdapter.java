@@ -1,4 +1,4 @@
-package com.codepath.upkar.gridimagesearch.activities;
+package com.codepath.upkar.gridimagesearch.models;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.codepath.upkar.gridimagesearch.R;
-import com.codepath.upkar.gridimagesearch.models.ImageResult;
 import com.loopj.android.image.SmartImageView;
 
 public class ImageResultsArrayAdapter extends ArrayAdapter<ImageResult> {

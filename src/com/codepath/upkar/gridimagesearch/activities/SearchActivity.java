@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.codepath.upkar.gridimagesearch.R;
 import com.codepath.upkar.gridimagesearch.models.ImageResult;
+import com.codepath.upkar.gridimagesearch.models.ImageResultsArrayAdapter;
 import com.codepath.upkar.gridimagesearch.util.Constants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
