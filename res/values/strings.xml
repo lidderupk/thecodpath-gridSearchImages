@@ -7,5 +7,13 @@
     <string name="search_hint">Enter Search Term</string>
     <string name="search_label">Search</string>
     <string name="title_activity_image_display">ImageDisplayActivity</string>
+    <string name="title_activity_pref">PrefActivity</string>
+    <string name="tv_pref_label">Advanced Search Options</string>
+    <string name="image_size">Image Size</string>
+    <string name="done">Done</string>
+    <string name="color_filter">Color Filter</string>
+    <string name="image_type">Image Type</string>
+    <string name="site_filter">Site Filter</string>
+    <string name="url_hint">example.com</string>
 
 </resources>

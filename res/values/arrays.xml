@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colors">
+        <item name="red">red</item>
+        <item name="green">green</item>
+        <item name="black">black</item>
+        <item name="yellow">yellow</item>
+        <item name="light_blue">Light Blue</item>
+        <item name="magenta">magenta</item>
+        <item name="white">white</item>
+    </string-array>
+    <string-array name="colorsValues">
+        <item name="red">@color/red</item>
+        <item name="green">@color/green</item>
+        <item name="black">@color/black</item>
+        <item name="yellow">@color/yellow</item>
+        <item name="light_blue">@color/light_blue</item>
+        <item name="magenta">@color/magenta</item>
+        <item name="white">@color/white</item>
+    </string-array>
+    
+    <string-array name="imageType">
+        <item name="faces">Faces</item>
+        <item name="photo">Photo</item>
+        <item name="clipArt">Clip Art</item>
+        <item name="lineArt">Line Art</item>
+    </string-array>
+</resources>

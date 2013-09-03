@@ -1,4 +1,4 @@
-package com.codepath.upkar.gridimagesearch;
+package com.codepath.upkar.gridimagesearch.models;
 
 import java.util.ArrayList;
 import java.util.List;
