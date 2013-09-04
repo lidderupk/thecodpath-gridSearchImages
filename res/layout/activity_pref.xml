@@ -7,49 +7,50 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PrefActivity" >
-
+    
     <TextView
         android:id="@+id/tvPrefLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:text="@string/tv_pref_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/btDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="@string/done" />
-
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvImageSizeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvPrefLabel"
         android:layout_below="@+id/tvPrefLabel"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="@string/image_size"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvSizeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sbSizeBar"
+        android:layout_below="@+id/sbSizeBar"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <SeekBar
         android:id="@+id/sbSizeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btDone"
-        android:layout_alignTop="@+id/textView1"
-        android:max="2" />
+        android:layout_alignTop="@+id/tvImageSizeLabel"
+        android:max="3" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvImageColorLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/spImageColor"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignLeft="@+id/tvImageSizeLabel"
+        android:layout_below="@+id/tvImageSizeLabel"
+        android:layout_marginTop="80dp"
         android:text="@string/color_filter"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -59,7 +60,18 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/sbSizeBar"
         android:layout_below="@+id/sbSizeBar"
+        android:layout_alignBottom="@+id/tvImageColorLabel"
         android:entries="@array/colors" />
+    
+    <TextView
+        android:id="@+id/tvImageTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvImageColorLabel"
+        android:layout_below="@+id/tvImageColorLabel"
+        android:layout_marginTop="50dp"
+        android:text="@string/image_type"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
         android:id="@+id/spImageTypeFilter"
@@ -67,24 +79,16 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/spImageColor"
         android:layout_below="@+id/spImageColor"
+        android:layout_alignBottom="@+id/tvImageTypeLabel"
         android:entries="@array/imageType" />
 
     <TextView
-        android:id="@+id/tvImageType"
+        android:id="@+id/tvSiteFilterLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/spImageTypeFilter"
-        android:layout_alignLeft="@+id/textView2"
-        android:text="@string/image_type"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvSiteFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvImageType"
-        android:layout_below="@+id/tvImageType"
-        android:layout_marginTop="24dp"
+        android:layout_alignLeft="@+id/tvImageTypeLabel"
+        android:layout_below="@+id/tvImageTypeLabel"
+        android:layout_marginTop="50dp"
         android:text="@string/site_filter"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -92,13 +96,23 @@
         android:id="@+id/etSiteFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvSiteFilter"
-        android:layout_alignBottom="@+id/tvSiteFilter"
+        android:layout_alignBottom="@+id/tvSiteFilterLabel"
         android:layout_alignLeft="@+id/spImageTypeFilter"
         android:ems="10"
         android:hint="@string/url_hint" >
-
-        <requestFocus />
     </EditText>
+
+    
+
+    <Button
+        android:id="@+id/btDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:text="@string/done" />
+
+    
 
 </RelativeLayout>

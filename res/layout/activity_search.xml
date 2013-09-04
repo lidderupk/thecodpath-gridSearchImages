@@ -15,7 +15,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:ems="10"
-        android:hint="@string/search_hint" >
+        android:hint="@string/search_hint" 
+        android:singleLine="true">
 
         <requestFocus />
     </EditText>
@@ -33,9 +34,28 @@
         android:id="@+id/gvResults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/btPrevious"
         android:layout_alignLeft="@+id/etQuery"
         android:layout_below="@+id/btnSearch"
         android:numColumns="3" >
+
     </GridView>
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btPrevious"
+        android:layout_alignBottom="@+id/btPrevious"
+        android:layout_toRightOf="@+id/btPrevious"
+        android:text="@string/next" />
+
+    <Button
+        android:id="@+id/btPrevious"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gvResults"
+        android:layout_alignParentBottom="true"
+        android:text="@string/previous" />
 
 </RelativeLayout>

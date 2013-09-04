@@ -12,10 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.codepath.upkar.gridimagesearch.R;
 import com.codepath.upkar.gridimagesearch.util.Constants;
+import com.codepath.upkar.gridimagesearch.util.ImageSizeEnum;
 
 public class PrefActivity extends Activity {
 
@@ -26,6 +29,7 @@ public class PrefActivity extends Activity {
 	private EditText etSiteFilter;
 	private Spinner spImageTypeFilter;
 	private SharedPreferences mPrefs;
+	private TextView tvSizeLabel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,9 @@ public class PrefActivity extends Activity {
 		sbImageSize = (SeekBar) findViewById(R.id.sbSizeBar);
 		etSiteFilter = (EditText) findViewById(R.id.etSiteFilter);
 		spImageTypeFilter = (Spinner) findViewById(R.id.spImageTypeFilter);
+		tvSizeLabel = (TextView) findViewById(R.id.tvSizeLabel);
+
+		setTvSizeLabelText(tvSizeLabel);
 
 		btDone = (Button) findViewById(R.id.btDone);
 		// final Activity activity = this;
@@ -58,6 +65,46 @@ public class PrefActivity extends Activity {
 				finish();
 			}
 		});
+		
+		sbImageSize.setOnSeekBarChangeListener(new  OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// no op
+				
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// no op
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				setTvSizeLabelText(PrefActivity.this.tvSizeLabel);
+			}
+		});
+	}
+
+	private void setTvSizeLabelText(TextView tvSizeLabel) {
+		switch (sbImageSize.getProgress()) {
+		case 0:
+			tvSizeLabel.setText(ImageSizeEnum.ICON.getValue());
+			break;
+		case 1:
+			tvSizeLabel.setText(ImageSizeEnum.MEDIUM.getValue());
+			break;
+		case 2:
+			tvSizeLabel.setText(ImageSizeEnum.XXLARGE.getValue());
+			break;
+		case 3:
+			tvSizeLabel.setText(ImageSizeEnum.HUGE.getValue());
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override

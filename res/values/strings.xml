@@ -15,5 +15,7 @@
     <string name="image_type">Image Type</string>
     <string name="site_filter">Site Filter</string>
     <string name="url_hint">example.com</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 
 </resources>

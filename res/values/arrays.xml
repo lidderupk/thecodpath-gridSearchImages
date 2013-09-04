@@ -5,8 +5,6 @@
         <item name="green">green</item>
         <item name="black">black</item>
         <item name="yellow">yellow</item>
-        <item name="light_blue">Light Blue</item>
-        <item name="magenta">magenta</item>
         <item name="white">white</item>
     </string-array>
     <string-array name="colorsValues">
@@ -14,15 +12,13 @@
         <item name="green">@color/green</item>
         <item name="black">@color/black</item>
         <item name="yellow">@color/yellow</item>
-        <item name="light_blue">@color/light_blue</item>
-        <item name="magenta">@color/magenta</item>
         <item name="white">@color/white</item>
     </string-array>
     
     <string-array name="imageType">
-        <item name="faces">Faces</item>
-        <item name="photo">Photo</item>
-        <item name="clipArt">Clip Art</item>
-        <item name="lineArt">Line Art</item>
+        <item name="faces">face</item>
+        <item name="photo">photo</item>
+        <item name="clipArt">clipart</item>
+        <item name="lineArt">lineart</item>
     </string-array>
 </resources>

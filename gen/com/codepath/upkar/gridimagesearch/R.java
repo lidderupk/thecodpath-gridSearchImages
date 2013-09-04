@@ -18,12 +18,10 @@ public final class R {
     public static final class color {
         public static final int black=0x7f050002;
         public static final int blue=0x7f050003;
-        public static final int gray=0x7f050007;
+        public static final int gray=0x7f050005;
         public static final int green=0x7f050001;
-        public static final int light_blue=0x7f050005;
-        public static final int magenta=0x7f050006;
         public static final int red=0x7f050000;
-        public static final int white=0x7f050008;
+        public static final int white=0x7f050006;
         public static final int yellow=0x7f050004;
     }
     public static final class dimen {
@@ -40,22 +38,25 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_refresh=0x7f0a000e;
-        public static final int action_settings=0x7f0a000f;
-        public static final int btDone=0x7f0a0002;
-        public static final int btnSearch=0x7f0a000c;
-        public static final int etQuery=0x7f0a000b;
-        public static final int etSiteFilter=0x7f0a000a;
-        public static final int gvResults=0x7f0a000d;
+        public static final int action_refresh=0x7f0a0011;
+        public static final int action_settings=0x7f0a0012;
+        public static final int btDone=0x7f0a0005;
+        public static final int btNext=0x7f0a0010;
+        public static final int btPrevious=0x7f0a000f;
+        public static final int btnSearch=0x7f0a000d;
+        public static final int etQuery=0x7f0a000c;
+        public static final int etSiteFilter=0x7f0a000b;
+        public static final int gvResults=0x7f0a000e;
         public static final int ivSmartImage=0x7f0a0000;
         public static final int sbSizeBar=0x7f0a0004;
-        public static final int spImageColor=0x7f0a0006;
-        public static final int spImageTypeFilter=0x7f0a0007;
-        public static final int textView1=0x7f0a0003;
-        public static final int textView2=0x7f0a0005;
-        public static final int tvImageType=0x7f0a0008;
+        public static final int spImageColor=0x7f0a0007;
+        public static final int spImageTypeFilter=0x7f0a0009;
+        public static final int tvImageColorLabel=0x7f0a0006;
+        public static final int tvImageSizeLabel=0x7f0a0002;
+        public static final int tvImageTypeLabel=0x7f0a0008;
         public static final int tvPrefLabel=0x7f0a0001;
-        public static final int tvSiteFilter=0x7f0a0009;
+        public static final int tvSiteFilterLabel=0x7f0a000a;
+        public static final int tvSizeLabel=0x7f0a0003;
     }
     public static final class layout {
         public static final int activity_image_display=0x7f030000;
@@ -76,6 +77,8 @@ public final class R {
         public static final int hello_world=0x7f070002;
         public static final int image_size=0x7f070008;
         public static final int image_type=0x7f07000b;
+        public static final int next=0x7f07000f;
+        public static final int previous=0x7f07000e;
         public static final int search_hint=0x7f070003;
         public static final int search_label=0x7f070004;
         public static final int site_filter=0x7f07000c;

@@ -11,10 +11,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -26,6 +29,7 @@ import com.codepath.upkar.gridimagesearch.R;
 import com.codepath.upkar.gridimagesearch.models.ImageResult;
 import com.codepath.upkar.gridimagesearch.models.ImageResultsArrayAdapter;
 import com.codepath.upkar.gridimagesearch.util.Constants;
+import com.codepath.upkar.gridimagesearch.util.ImageSizeEnum;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -42,18 +46,29 @@ public class SearchActivity extends Activity {
 	private String querySiteFilter;
 	private int queryImageSize;
 	private String queryImageType;
+	private Button btPrevious;
+	private Button btNext;
+
+	private int startImageIndex = 0;
+	private final int maxImagesInResult = 8;
+	private AsyncHttpClient client;
+	private String searchText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 		setupViews();
+		client = new AsyncHttpClient();
 	}
 
 	private void setupViews() {
 		btSearch = (Button) findViewById(R.id.btnSearch);
 		etQuery = (EditText) findViewById(R.id.etQuery);
 		gvResults = (GridView) findViewById(R.id.gvResults);
+		btPrevious = (Button) findViewById(R.id.btPrevious);
+		btNext = (Button) findViewById(R.id.btNext);
+		resetButtonsAndStartIndex();
 
 		itemsAdapter = new ImageResultsArrayAdapter(getBaseContext(),
 				imageResults);
@@ -64,8 +79,6 @@ public class SearchActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View parent,
 					int position, long rowId) {
-				Log.d(tag, "item clicked !");
-
 				Intent intent = new Intent(
 						SearchActivity.this.getBaseContext(),
 						ImageDisplayActivity.class);
@@ -75,6 +88,67 @@ public class SearchActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+
+		btPrevious.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onBtPreviousClick();
+			}
+		});
+
+		btNext.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onBtNextClick();
+			}
+		});
+
+		etQuery.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// no op
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// no op
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// disable navigation buttons
+				if (s.toString() == null || s.toString().length() < 1) {
+					resetButtonsAndStartIndex();
+				}
+			}
+		});
+	}
+
+	private void onBtNextClick() {
+		startImageIndex += maxImagesInResult;
+		final String queryString = createQueryString(searchText,
+				startImageIndex);
+		asyncGetImages(client, queryString);
+		btPrevious.setEnabled(true);
+		Log.d(tag, "startImageIndex: " + startImageIndex);
+	}
+
+	private void onBtPreviousClick() {
+		startImageIndex -= maxImagesInResult;
+
+		if (startImageIndex <= 0) {
+			startImageIndex = 0;
+			btPrevious.setEnabled(false);
+		}
+
+		final String queryString = createQueryString(searchText,
+				startImageIndex);
+		asyncGetImages(client, queryString);
 	}
 
 	@Override
@@ -117,41 +191,54 @@ public class SearchActivity extends Activity {
 	}
 
 	public void onImageSearch(View v) {
-		Log.d("Debug", "button clicked.");
-
-		AsyncHttpClient client = new AsyncHttpClient();
-		// https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=barack%20obama
-		String searchText = etQuery.getText().toString();
+		searchText = etQuery.getText().toString();
 
 		if (searchText == null || searchText.length() < 1) {
 
 			Toast.makeText(getBaseContext(), "Enter text to search",
 					Toast.LENGTH_SHORT).show();
+			resetButtonsAndStartIndex();
 			return;
 		}
 
-		String queryString = createQueryString(searchText);
+		final String queryString = createQueryString(searchText, 0);
+		asyncGetImages(client, queryString);
+	}
 
+	private void resetButtonsAndStartIndex() {
+		btPrevious.setEnabled(false);
+		btNext.setEnabled(false);
+		startImageIndex = 0;
+	}
+
+	private void asyncGetImages(AsyncHttpClient client, final String queryString) {
 		client.get(queryString, new JsonHttpResponseHandler() {
+
 			@Override
 			public void onSuccess(JSONObject response) {
-				Log.d("Debug", "on success.");
+
 				JSONArray imageJsonResults = null;
+				JSONObject responseData = null;
 				try {
-					JSONObject responseData = response
-							.getJSONObject("responseData");
+					responseData = response.getJSONObject("responseData");
 					imageJsonResults = responseData.getJSONArray("results");
 					imageResults.clear();
+					itemsAdapter.clear();
+
 					List<? extends ImageResult> fromJSONArray = ImageResult
 							.fromJSONArray(imageJsonResults);
-					imageResults.addAll(fromJSONArray);
-					Log.d(tag, imageResults.toString());
 					itemsAdapter.addAll(fromJSONArray);
-
-					// itemsAdapter.notify();
+					btNext.setEnabled(true);
 
 				} catch (JSONException e) {
 					e.printStackTrace();
+
+					if (responseData == null || responseData.length() < 1) {
+						btNext.setEnabled(false);
+						Toast.makeText(getBaseContext(), "No more results :(",
+								Toast.LENGTH_SHORT).show();
+						return;
+					}
 				}
 			}
 
@@ -163,23 +250,27 @@ public class SearchActivity extends Activity {
 		});
 	}
 
-	private String createQueryString(String searchText) {
+	private String createQueryString(String searchText, int startIndex) {
 		StringBuffer result = new StringBuffer(
-				"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-						+ Uri.encode(searchText));
+				"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz="
+						+ maxImagesInResult + "&start=" + startImageIndex
+						+ "&q=" + Uri.encode(searchText));
 		if (queryImageColor != null && queryImageColor.length() > 0)
 			result.append("&imgcolor=" + queryImageColor);
 
 		String imageSize = "icon";
 		switch (queryImageSize) {
 		case 0:
-			imageSize = "icon";
+			imageSize = ImageSizeEnum.ICON.getValue();
 			break;
 		case 1:
-			imageSize = "small";
+			imageSize = ImageSizeEnum.MEDIUM.getValue();
 			break;
 		case 2:
-			imageSize = "xxlarge";
+			imageSize = ImageSizeEnum.XXLARGE.getValue();
+			break;
+		case 3:
+			imageSize = ImageSizeEnum.HUGE.getValue();
 			break;
 		default:
 			break;
@@ -193,7 +284,10 @@ public class SearchActivity extends Activity {
 		if (querySiteFilter != null && querySiteFilter.length() > 0)
 			result.append("&as_sitesearch=" + querySiteFilter);
 
-		Log.d(tag, "search query: " + result.toString());
+		if (queryImageType != null && queryImageType.length() > 0)
+			result.append("&imgtype=" + queryImageType);
+
+		// Log.d(tag, "search query: " + result.toString());
 		return result.toString();
 	}
 }
