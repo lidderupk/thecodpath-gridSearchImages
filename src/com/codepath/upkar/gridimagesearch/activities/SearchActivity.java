@@ -193,7 +193,7 @@ public class SearchActivity extends Activity {
 	public void onImageSearch(View v) {
 		searchText = etQuery.getText().toString();
 
-		if (searchText == null || searchText.length() < 1) {
+		if (searchText == null || searchText.length() < 1) { 
 
 			Toast.makeText(getBaseContext(), "Enter text to search",
 					Toast.LENGTH_SHORT).show();
