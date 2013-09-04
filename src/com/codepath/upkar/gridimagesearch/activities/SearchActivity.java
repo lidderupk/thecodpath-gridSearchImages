@@ -201,6 +201,8 @@ public class SearchActivity extends Activity {
 			return;
 		}
 
+		resetButtonsAndStartIndex();
+
 		final String queryString = createQueryString(searchText, 0);
 		asyncGetImages(client, queryString);
 	}
